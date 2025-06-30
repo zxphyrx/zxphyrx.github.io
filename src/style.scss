@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+$bg: #0f1017;
+$hero-bg: #0f1017;
+$card-bg: #000000;
+$primary: #807bff;
+$glow: rgba(128, 123, 255, 0.2);
+$secondary: rgba(52, 71, 102, 30%);
+$accent: #a5a2e6;
+$hero-accent: linear-gradient(to right, $primary, $accent);
+$text: hsl(0, 0%, 90%);
+
+$margin-xxs: 0.25rem; // 4px
+$margin-xs:  0.5rem;  // 8px
+$margin-s:   0.75rem; // 12px
+$margin-m:   1rem;    // 16px
+$margin-l:   1.25rem; // 20px
+$margin-xl:  1.75rem; // 28px
+$margin-xxl: 2.5rem;  // 40px
+
+$phi: 1.6180339887;
+
+@function hsla-from($hsl, $alpha) {
+    @return hsla(hue($hsl), saturation($hsl), lightness($hsl), $alpha);
+}
+
+@mixin text {
+    margin: 0;
+    width: 40vw;
+    text-align: left;
+}
+
+@mixin heading {
+    @include text;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-family: "PT Serif", serif;
+}
+
+@mixin body-text {
+    @include text;
+    line-height: calc(1.25rem * 1.4);
+    font-family: "Lato", sans-serif;
+    font-size: 1.2rem;
+}
+
+body, #app {
+    background-color: $bg;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+h1 {
+    @include heading;
+    font-weight: 500;
+    font-size: 2.986rem;
+    line-height: 1.15;
+    letter-spacing: -0.022em;
+    color: $accent;
+}
+
+h2 {
+    @include heading;
+    font-weight: 500;
+    font-size: 2.69rem;
+    color: $accent;
+}
+
+h3 {
+    @include heading;
+    font-weight: 500;
+    font-size: 2rem;
+    color: $text;
+}
+
+h4 {
+    @include heading;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: $text;
+}
+
+h5 {
+    @include heading;
+    font-weight: 500;
+    font-size: 1.125em;
+    color: $text;
+}
+
+h6 {
+    @include heading;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $text;
+}
+
+
+p, a {
+    @include body-text;
+    font-weight: 400;
+    color: $text;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.feather {
+    stroke: white;
+}
+
+.section {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg;
+    z-index: 998;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
+#topbar {
+    z-index: 1000;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    flex-direction: row;
+    position: fixed;
+    top: $margin-xl;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 2px $primary;
+    width: fit-content;
+    max-width: 60vw;
+    height: fit-content;
+    border-radius: 8px;
+    background-color: hsl(235.71, 30.43%, 9.02%, 0.5);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+
+    a {
+        color: white;
+        padding: 16px;
+        width: fit-content;
+    }
+}
+
+#hero {
+    background-image: linear-gradient(90deg, $bg);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $hero-bg;
+    position: relative;
+
+    h1 {
+        margin-bottom: $margin-l;
+        text-align: center;
+    }
+
+    p {
+        color: $text;
+        text-align: center;
+    }
+
+    button#hero-scrolldown {
+        z-index: 1001;
+        position: absolute;
+        bottom: $margin-xl;
+        margin-inline: 0 auto;
+        background-color: $secondary;
+        border: none;
+        border-radius: 100px;
+        box-sizing: content-box;
+        padding: 8px;
+        height: 24px;
+        width: 24px;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+        .feather {
+            height: 100%;
+            width: 100%;
+            stroke-width: 1.75;
+            stroke: $text;
+        }
+    }
+}
+
+#aboutme {
+    box-sizing: content-box;
+    position: relative;
+    background-color: rgba(15, 16, 23, 0);
+    backdrop-filter: blur(0px);
+    will-change: backdrop-filter;
+
+    h2 {
+        margin-bottom: $margin-l;
+    }
+
+    #aboutme-blurCover {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        backdrop-filter: blur(3px);
+        will-change: backdrop-filter;
+        background-color: rgba(15, 16, 23, 0);
+    }
+}
+
+#projects-label {
+    justify-content: start;
+    
+    h2 {
+        text-align: center;
+    }
+}
+
+#projects {
+    position: relative;
+    height: fit-content;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+
+    #projects-cards {
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        padding: 0 64px;
+        box-sizing: border-box;
+
+        .projects-card {
+            position: relative;
+            height: 80vh;
+            width: calc(80vh / $phi);
+            background-color: $card-bg;
+            border-radius: 8px;
+            margin: 0 $margin-xl 0 0;
+            display: flex;
+            flex-direction: column;
+
+            .image-container {
+                height: fit-content;
+                width: 100%;
+                border-radius: 8px 8px 0 0;
+
+                img {
+                    height: auto;
+                    width: 100%;
+                    border-radius: inherit;
+                }
+            }
+
+            .info-container {
+                flex-grow: 1;
+                padding: $margin-xxl;
+            }
+
+            h3 {
+                width: 100%;
+                margin-bottom: $margin-m;
+            }
+
+            p {
+                width: 100%;
+            }
+        }
+        
+        .projects-card:last-child {
+            margin: 0;
+        }
+    }
+
+}
+
+
+#projects-cards-end {
+    height: 0;
+    width: 100vw;
+    background-color: pink;
+}
