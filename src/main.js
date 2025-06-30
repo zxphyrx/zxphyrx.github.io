@@ -1,6 +1,8 @@
 import "./style.scss";
 import { gsap, ScrollTrigger, ScrollSmoother, ScrollToPlugin } from "gsap/all";
+import { replace } from "feather-icons";
 
+replace();
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
 let smoother = ScrollSmoother.create({
