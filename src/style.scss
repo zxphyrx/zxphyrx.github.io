@@ -180,15 +180,14 @@ p, a {
     }
 
     button#hero-scrolldown {
-        z-index: 1001;
         position: absolute;
         bottom: $margin-xl;
         margin-inline: 0 auto;
-        background-color: $secondary;
+        background-color: transparent;
         border: none;
         border-radius: 100px;
         box-sizing: content-box;
-        padding: 8px;
+        padding: 4px;
         height: 24px;
         width: 24px;
         aspect-ratio: 1 / 1;
@@ -199,7 +198,7 @@ p, a {
             height: 100%;
             width: 100%;
             stroke-width: 1.75;
-            stroke: $text;
+            stroke: $primary;
         }
     }
 }
