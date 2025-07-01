@@ -39,11 +39,12 @@ const heroScrolldown = gsap.timeline()
         end: "bottom top",
         pin: heroSection,
         scrub: true,
+        markers: true
     }
 })
-.fromTo(aboutmeSection,
+.fromTo(heroSection,
     {
-        backdropFilter: "blur(0px)",
+        filter: "blur(0px)",
     },
     {
         scrollTrigger: {
@@ -51,9 +52,9 @@ const heroScrolldown = gsap.timeline()
             start: "top 25%",
             endTrigger: aboutmeSection,
             end: "top 10%",
-            scrub: true,
+            scrub: true
         },
-        backdropFilter: "blur(3px)"
+        filter: "blur(3px)"
     }
 )
 .fromTo(aboutmeSection,
@@ -66,7 +67,7 @@ const heroScrolldown = gsap.timeline()
             trigger: aboutmeSection,
             end: "top top",
             endTrigger: aboutmeSection,
-            scrub: true,
+            scrub: true
         },
         backgroundColor: "rgba(15, 16, 23, 1)"
     }
@@ -81,7 +82,7 @@ const heroScrolldown = gsap.timeline()
             start: "top 25%",
             endTrigger: aboutmeSection,
             end: "top 10%",
-            scrub: true,
+            scrub: true
         },
         backdropFilter: "blur(0px)",
     }
