@@ -222,6 +222,7 @@ p, a {
         backdrop-filter: blur(3px);
         will-change: backdrop-filter;
         background-color: rgba(15, 16, 23, 0);
+        pointer-events: none;
     }
 }
 
