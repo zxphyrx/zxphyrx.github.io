@@ -30,19 +30,18 @@ const heroScrolldownSpin = gsap.timeline()
 .set(heroScrolldownBtn, { rotation: 0 })
 .pause();
 
-const heroScrolldown = gsap.timeline()
-.to(heroSection, {
+gsap.to(heroSection, {
     scrollTrigger: {
         start: "bottom bottom",
         trigger: heroSection,
         endTrigger: heroSection,
         end: "bottom top",
         pin: heroSection,
-        scrub: true,
-        markers: true
+        scrub: true
     }
 })
-.fromTo(heroSection,
+
+gsap.fromTo(heroSection,
     {
         filter: "blur(0px)",
     },
@@ -57,7 +56,8 @@ const heroScrolldown = gsap.timeline()
         filter: "blur(3px)"
     }
 )
-.fromTo(aboutmeSection,
+
+gsap.fromTo(aboutmeSection,
     {
         backgroundColor: "rgba(15, 16, 23, 0)"
     },
@@ -72,7 +72,8 @@ const heroScrolldown = gsap.timeline()
         backgroundColor: "rgba(15, 16, 23, 1)"
     }
 )
-.fromTo(aboutmeCover,
+
+gsap.fromTo(aboutmeCover,
     {
         backdropFilter: "blur(3px)"
     },
@@ -88,29 +89,34 @@ const heroScrolldown = gsap.timeline()
     }
 )
 
-const projectsLabelScrolldown = gsap.timeline({
+gsap.timeline({
     scrollTrigger: {
         trigger: projectsLabel,
         start: "center center",
-        endTrigger: projectsSection,
-        end: "top top",
+        endTrigger: projectsCards,
+        end: "top center",
+        scrub: true,
         pin: projectsLabelSection,
-        scrub: true
     }
 })
-.from(projectsLabel, {
-    opacity: 0
-})
-.to(projectsLabel, {
-    opacity: 1
-})
-.from(projectsLabel, {
-    opacity: 1
-})
-.to(projectsLabel, {
-    opacity: 0
-})
-const projectsCardsScrolldown = gsap.timeline({
+.fromTo(projectsLabel, 
+    {
+        opacity: 0
+    },
+    {
+        opacity: 1
+    }
+)
+.fromTo(projectsLabel, 
+    {
+        opacity: 1
+    },
+    {
+        opacity: 0
+    }
+)
+
+gsap.to(projectsCards, {
     scrollTrigger: {
         scrub: true,
         trigger: projectsCards,
@@ -118,9 +124,7 @@ const projectsCardsScrolldown = gsap.timeline({
         endTrigger: projectsCardsEnd,
         end: "top bottom",
         pin: projectsSection
-    }
-})
-.to(projectsCards, {
+    },
     ease: "sine.inOut",
     x: -(projectsCards.clientWidth - window.innerWidth)
 })
