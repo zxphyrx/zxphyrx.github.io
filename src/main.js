@@ -10,6 +10,8 @@ let smoother = ScrollSmoother.create({
     effects: true
 })
 
+const loadingScreen = document.querySelector("#loading");
+
 const heroSection = document.querySelector("#hero");
 const heroScrolldownBtn = document.querySelector("#hero-scrolldown");
 
@@ -18,7 +20,7 @@ const aboutmeCover = document.querySelector("#aboutme-blurCover");
 
 const projectsLabelSection = document.querySelector("#projects-label");
 const projectsLabel = projectsLabelSection.querySelector("h2");
-console.log(projectsLabel)
+
 const projectsSection = document.querySelector("#projects");
 const projectsCards = document.querySelector("#projects-cards");
 const projectsCardsEnd = document.querySelector("#projects-cards-end"); 
@@ -30,110 +32,115 @@ const heroScrolldownSpin = gsap.timeline()
 .set(heroScrolldownBtn, { rotation: 0 })
 .pause();
 
-gsap.to(heroSection, {
-    scrollTrigger: {
-        start: "bottom bottom",
-        trigger: heroSection,
-        endTrigger: heroSection,
-        end: "bottom top",
-        pin: heroSection,
-        scrub: true
-    }
-})
-
-gsap.fromTo(heroSection,
-    {
-        filter: "blur(0px)",
-    },
-    {
+function loadAnimations() {
+    gsap.to(heroSection, {
         scrollTrigger: {
-            trigger: aboutmeSection,
-            start: "top 25%",
-            endTrigger: aboutmeSection,
-            end: "top 10%",
+            start: "bottom bottom",
+            trigger: heroSection,
+            endTrigger: heroSection,
+            end: "bottom top",
+            pin: heroSection,
             scrub: true
-        },
-        filter: "blur(3px)"
-    }
-)
+        }
+    })
 
-gsap.fromTo(aboutmeSection,
-    {
-        backgroundColor: "rgba(15, 16, 23, 0)"
-    },
-    {
+    gsap.fromTo(heroSection,
+        {
+            filter: "blur(0px)",
+        },
+        {
+            scrollTrigger: {
+                trigger: aboutmeSection,
+                start: "top 25%",
+                endTrigger: aboutmeSection,
+                end: "top 10%",
+                scrub: true
+            },
+            filter: "blur(3px)"
+        }
+    )
+
+    gsap.fromTo(aboutmeSection,
+        {
+            backgroundColor: "rgba(15, 16, 23, 0)"
+        },
+        {
+            scrollTrigger: {
+                start: "top 40%",
+                trigger: aboutmeSection,
+                end: "top top",
+                endTrigger: aboutmeSection,
+                scrub: true
+            },
+            backgroundColor: "rgba(15, 16, 23, 1)"
+        }
+    )
+
+    gsap.fromTo(aboutmeCover,
+        {
+            backdropFilter: "blur(3px)"
+        },
+        {
+            scrollTrigger: {
+                trigger: aboutmeSection,
+                start: "top 25%",
+                endTrigger: aboutmeSection,
+                end: "top 10%",
+                scrub: true
+            },
+            backdropFilter: "blur(0px)",
+        }
+    )
+
+    gsap.timeline({
         scrollTrigger: {
-            start: "top 40%",
-            trigger: aboutmeSection,
-            end: "top top",
-            endTrigger: aboutmeSection,
-            scrub: true
+            trigger: projectsLabel,
+            start: "center center",
+            endTrigger: projectsCards,
+            end: "top center",
+            scrub: true,
+            pin: projectsLabelSection,
+        }
+    })
+    .fromTo(projectsLabel, 
+        {
+            opacity: 0
         },
-        backgroundColor: "rgba(15, 16, 23, 1)"
-    }
-)
+        {
+            opacity: 1
+        }
+    )
+    .fromTo(projectsLabel, 
+        {
+            opacity: 1
+        },
+        {
+            opacity: 0
+        },
+    1)
 
-gsap.fromTo(aboutmeCover,
-    {
-        backdropFilter: "blur(3px)"
-    },
-    {
+    gsap.to(projectsCards, {
         scrollTrigger: {
-            trigger: aboutmeSection,
-            start: "top 25%",
-            endTrigger: aboutmeSection,
-            end: "top 10%",
-            scrub: true
+            scrub: true,
+            trigger: projectsCards,
+            start: "center center",
+            endTrigger: projectsCardsEnd,
+            end: "top bottom",
+            pin: projectsSection
         },
-        backdropFilter: "blur(0px)",
-    }
-)
-
-gsap.timeline({
-    scrollTrigger: {
-        trigger: projectsLabel,
-        start: "center center",
-        endTrigger: projectsCards,
-        end: "top center",
-        scrub: true,
-        pin: projectsLabelSection,
-    }
-})
-.fromTo(projectsLabel, 
-    {
-        opacity: 0
-    },
-    {
-        opacity: 1
-    }
-)
-.fromTo(projectsLabel, 
-    {
-        opacity: 1
-    },
-    {
-        opacity: 0
-    }
-)
-
-gsap.to(projectsCards, {
-    scrollTrigger: {
-        scrub: true,
-        trigger: projectsCards,
-        start: "center center",
-        endTrigger: projectsCardsEnd,
-        end: "top bottom",
-        pin: projectsSection
-    },
-    ease: "sine.inOut",
-    x: -(projectsCards.clientWidth - window.innerWidth)
-})
+        ease: "sine.inOut",
+        x: -(projectsCards.clientWidth - window.innerWidth)
+    })
+}
 
 function updateProjectsCards() {
     projectsCardsEnd.style.marginTop = (projectsCards.clientWidth / 2) + "px";
 }
 
-updateProjectsCards();
+function main() {
+    loadAnimations();
+    updateProjectsCards();
+}
 
 heroScrolldownBtn.addEventListener("click", () => {
     heroScrolldownSpin.restart();
@@ -149,4 +156,15 @@ document.addEventListener("keypress", (ev) => {
     }
 })
 
+window.scrollTo(0, 0);
+
 window.addEventListener("resize", updateProjectsCards);
+window.addEventListener("load", async () => {
+    await gsap.to(loadingScreen, {
+        opacity: 0,
+        duration: 0.25
+    })
+    document.body.style.overflowY = "auto";
+    main();
+    ScrollTrigger.refresh();
+})
