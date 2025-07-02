@@ -4,12 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>zxphyrx</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700');
+    </style>
     <style id="border"></style>
-    <script type="module" crossorigin src="/assets/index-IVeb0o0D.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-nDC808Hz.css">
+    <style>
+      html {
+        background-color: #0f1017;
+      }
+
+      body, #app {
+          overflow-y: hidden; /* For loading screen */
+      }
+
+      #loading {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #060914;
+        z-index: 1001;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        display: flex;
+      }
+
+      #loading > h2#loading-heading {
+        line-height: 1;
+        letter-spacing: -1px;
+        font-family: "PT Serif", serif;
+        font-weight: 500;
+        font-size: 2.69rem;
+        color: #a5a2e6;
+        text-align: center;
+        width: fit-content;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-BUGhXwD_.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CuZKRpYV.css">
   </head>
   <body>
     <div id="app">
+      <div id="loading">
+        <h2 id="loading-heading">loading</h2>
+      </div>
       <!--
       <header id="topbar">
         <a>About Me</a>
