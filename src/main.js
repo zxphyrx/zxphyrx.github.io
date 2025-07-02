@@ -164,7 +164,9 @@ window.addEventListener("load", async () => {
         opacity: 0,
         duration: 0.25
     })
-    document.body.style.overflowY = "auto";
-    main();
-    ScrollTrigger.refresh();
+    setTimeout(() => {
+        document.body.style.overflowY = "auto";
+        main();
+        ScrollTrigger.refresh();
+    }, 250)
 })
