@@ -17,9 +17,11 @@ const heroScrolldownBtn = document.querySelector("#hero-scrolldown");
 
 const aboutmeSection = document.querySelector("#aboutme");
 const aboutmeCover = document.querySelector("#aboutme-blurCover");
+const aboutmeText = document.querySelector("#aboutme > p");
 
 const projectsLabelSection = document.querySelector("#projects-label");
 const projectsLabel = projectsLabelSection.querySelector("h2");
+const projectsLabelMask = projectsLabelSection.querySelector("#projects-label-mask");
 
 const projectsSection = document.querySelector("#projects");
 const projectsCards = document.querySelector("#projects-cards");
@@ -92,32 +94,50 @@ function loadAnimations() {
         }
     )
 
-    gsap.timeline({
+    gsap.fromTo(projectsLabelMask,
+        {
+            width: 0,
+            borderColor: "hsla(0, 0%, 90%, 30%)",
+        },
+        {
+            scrollTrigger: {
+                trigger: aboutmeText,
+                start: "bottom top",
+                endTrigger: projectsCards,
+                end: "top center",
+                toggleActions: "restart none none reverse",
+            },
+            width: projectsLabel.clientWidth,
+            duration: 0.25
+        }
+    )
+
+    gsap.to(projectsLabelSection, {
         scrollTrigger: {
             trigger: projectsLabel,
             start: "center center",
             endTrigger: projectsCards,
-            end: "top center",
+            end: "center center",
             scrub: true,
             pin: projectsLabelSection,
         }
     })
-    .fromTo(projectsLabel, 
-        {
-            opacity: 0
-        },
+
+    gsap.fromTo(projectsLabel,
         {
             opacity: 1
+        },
+        {
+            scrollTrigger: {
+                trigger: projectsCards,
+                start: "top bottom",
+                endTrigger: projectsCards,
+                end: "center center",
+                scrub: true
+            },
+            opacity: 0
         }
     )
-    .fromTo(projectsLabel, 
-        {
-            opacity: 1
-        },
-        {
-            opacity: 0
-        },
-    1)
 
     gsap.to(projectsCards, {
         scrollTrigger: {
@@ -164,9 +184,7 @@ window.addEventListener("load", async () => {
         opacity: 0,
         duration: 0.25
     })
-    setTimeout(() => {
-        document.body.style.overflowY = "auto";
-        main();
-        ScrollTrigger.refresh();
-    }, 250)
+    document.body.style.overflowY = "auto";
+    main();
+    ScrollTrigger.refresh();
 })
