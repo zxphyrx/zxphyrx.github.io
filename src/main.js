@@ -35,6 +35,22 @@ const heroScrolldownSpin = gsap.timeline()
 .pause();
 
 function loadAnimations() {
+    gsap.fromTo(heroScrolldownBtn,
+        {
+            opacity: 1
+        },
+        {
+            scrollTrigger: {
+                start: "top bottom",
+                trigger: aboutmeSection,
+                endTrigger: aboutmeSection,
+                end: "top center",
+                scrub: true
+            },
+            opacity: 0
+        }
+    )
+
     gsap.to(heroSection, {
         scrollTrigger: {
             start: "bottom bottom",
@@ -94,24 +110,6 @@ function loadAnimations() {
         }
     )
 
-    gsap.fromTo(projectsLabelMask,
-        {
-            width: 0,
-            borderColor: "hsla(0, 0%, 90%, 30%)",
-        },
-        {
-            scrollTrigger: {
-                trigger: aboutmeText,
-                start: "bottom top",
-                endTrigger: projectsCards,
-                end: "top center",
-                toggleActions: "restart none none reverse",
-            },
-            width: projectsLabel.clientWidth,
-            duration: 0.25
-        }
-    )
-
     gsap.to(projectsLabelSection, {
         scrollTrigger: {
             trigger: projectsLabel,
@@ -122,23 +120,52 @@ function loadAnimations() {
             pin: projectsLabelSection,
         }
     })
-
-    gsap.fromTo(projectsLabel,
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: projectsCards,
+            start: "top bottom",
+            endTrigger: projectsCards,
+            end: "top center",
+            scrub: true
+        }
+    })
+    .fromTo(projectsLabel,
         {
             opacity: 1
         },
         {
-            scrollTrigger: {
-                trigger: projectsCards,
-                start: "top bottom",
-                endTrigger: projectsCards,
-                end: "center center",
-                scrub: true
-            },
             opacity: 0
         }
     )
 
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: projectsLabel,
+            start: "center center",
+            scrub: true,
+            endTrigger: projectsCards,
+            end: "-30% bottom"
+        }
+    })
+    .fromTo(projectsLabel,
+        {
+            opacity: 0,
+        },
+        {
+            opacity: 1,
+            duration: 0.2
+        },
+    )
+    .fromTo(projectsLabel,
+        {
+            filter: "blur(3px)"
+        },
+        {
+            filter: "blur(0px)",
+            duration: 0.1
+        },
+    0.3)
+    
     gsap.to(projectsCards, {
         scrollTrigger: {
             scrub: true,

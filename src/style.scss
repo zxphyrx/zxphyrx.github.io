@@ -206,7 +206,8 @@ p, a {
     box-sizing: content-box;
     position: relative;
     background-color: rgba(15, 16, 23, 0);
-
+    border-top: thin solid rgba(15, 16, 23, 0.1);
+    background-blend-mode: screen;
     h2 {
         margin-bottom: $margin-l;
     }
@@ -225,22 +226,15 @@ p, a {
 
 #projects-label {
     justify-content: start;
-    
-    #projects-label-mask {
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        height: fit-content;
-        padding: $margin-xxs 0;
-        
-        h2 {
-            opacity: 0;
-            text-align: center;
-            white-space: nowrap;
-            overflow-wrap: normal;
-            word-break: normal;
-            width: fit-content;
-        }
+
+    h2 {
+        opacity: 0;
+        filter: blur(3px);
+        text-align: center;
+        white-space: nowrap;
+        overflow-wrap: normal;
+        word-break: normal;
+        width: fit-content;
     }
 }
 
