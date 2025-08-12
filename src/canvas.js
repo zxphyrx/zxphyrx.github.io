@@ -4,6 +4,8 @@ const ctx = canvas.getContext("2d");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
+ctx.imageSmoothingEnabled = false;
+
 let balls = [];
 
 let mousePos = {
@@ -40,11 +42,11 @@ function newBall() {
         direction: randomRange(0, Math.PI * 2),
         size: 5,
         attracted: false,
-        threshold: 100
+        threshold: 200
     })
 }
 
-for(let i = 0; i < 6; i++) {
+for(let i = 0; i < 10; i++) {
     newBall();
 }
 
@@ -71,12 +73,12 @@ function animate() {
             ball.direction = getAngle(ball, mousePos);
             if(!ball.attracted) {
                 ball.attracted = true;
-                ball.opacity = randomRange(0.6, 1);
+                ball.opacity = randomRange(0.6, 8);
             }
         } else {
             if(ball.attracted) {
                 ball.attracted = false;
-                ball.direction = randomRange(0, 360);
+                ball.direction = randomRange(0, Math.PI * 2);
                 ball.opacity = randomRange(0.1, 0.5);
             }
         }
