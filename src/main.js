@@ -5,11 +5,6 @@ import { replace } from "feather-icons";
 replace();
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
-let smoother = ScrollSmoother.create({
-    smooth: 0.75,
-    effects: true
-})
-
 const loadingScreen = document.querySelector("#loading");
 
 const heroSection = document.querySelector("#hero");
