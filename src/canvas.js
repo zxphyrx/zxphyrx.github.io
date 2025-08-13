@@ -1,8 +1,10 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+const scale = 0.5;
+
+canvas.height = window.innerHeight * scale;
+canvas.width = window.innerWidth * scale;
 
 ctx.imageSmoothingEnabled = false;
 
@@ -37,12 +39,12 @@ function newBall() {
     balls.push({
         x: randomRange(0, canvas.width),
         y: randomRange(0, canvas.height),
-        speed: randomRange(0.1, 0.5),
+        speed: randomRange(0.3, 0.5) * scale,
         opacity: randomRange(0.1, 0.5),
         direction: randomRange(0, Math.PI * 2),
         size: 5,
         attracted: false,
-        threshold: 200
+        threshold: 200 * scale
     })
 }
 
@@ -69,7 +71,8 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     balls.forEach((ball, index) => {
-        if(getDistance(ball, mousePos) < ball.threshold) {
+        console.log(mousePos.x)
+        if(mousePos.x && getDistance(ball, mousePos) < ball.threshold) {
             ball.direction = getAngle(ball, mousePos);
             if(!ball.attracted) {
                 ball.attracted = true;
@@ -101,18 +104,23 @@ function animate() {
 
 animate();
 
-document.addEventListener("mousemove", (event) => {
+document.body.addEventListener("mousemove", (event) => {
     const canvasRect = canvas.getBoundingClientRect();
-    mousePos.x = event.clientX - canvasRect.left;
-    mousePos.y = event.clientY - canvasRect.top;
+    mousePos.x = (event.clientX - canvasRect.left) * scale;
+    mousePos.y = (event.clientY - canvasRect.top) * scale;
 })
 
-document.addEventListener("mouseenter", (event) => {
+document.body.addEventListener("mouseenter", (event) => {
     const canvasRect = canvas.getBoundingClientRect();
-    mousePos.x = event.clientX - canvasRect.left;
-    mousePos.y = event.clientY - canvasRect.top;
+    mousePos.x = (event.clientX - canvasRect.left) * scale;
+    mousePos.y = (event.clientY - canvasRect.top) * scale;
 })
 
-document.addEventListener("mouseleave", () => {
+document.body.addEventListener("mouseleave", () => {
     mousePos.x = false;
+})
+
+window.addEventListener("resize", () => {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
 })
