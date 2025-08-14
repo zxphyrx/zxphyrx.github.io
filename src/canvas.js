@@ -24,15 +24,20 @@ function randomInt(min, max) {
 }
 
 function drawBall(ball) {
-    ctx.globalAlpha = ball.opacity;
+    ctx.save();
+    
     ctx.shadowColor = "lightblue";
     ctx.shadowBlur = 8;
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "black";
+    ctx.globalAlpha = ball.opacity;
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
-    ctx.fillStyle = "white";
     ctx.fill();
+    ctx.stroke();
     ctx.closePath();
-    ctx.globalAlpha = 1;
+
+    ctx.restore();
 }
 
 function newBall() {
@@ -42,9 +47,20 @@ function newBall() {
         speed: randomRange(0.3, 0.5) * scale,
         opacity: randomRange(0.1, 0.5),
         direction: randomRange(0, Math.PI * 2),
-        size: 5,
+        size: 4,
         attracted: false,
         threshold: 200 * scale
+    })
+}
+
+function repositionBalls(oldCanvas, canvas) {
+    balls.forEach((ball, index) => {
+        if(oldCanvas.width != canvas.width) {
+            ball.x *= canvas.width / oldCanvas.width;
+        }
+        if(oldCanvas.height != canvas.height) {
+            ball.y *= canvas.height / oldCanvas.height;
+        }
     })
 }
 
@@ -71,7 +87,6 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     balls.forEach((ball, index) => {
-        console.log(mousePos.x)
         if(mousePos.x && getDistance(ball, mousePos) < ball.threshold) {
             ball.direction = getAngle(ball, mousePos);
             if(!ball.attracted) {
@@ -121,6 +136,11 @@ document.body.addEventListener("mouseleave", () => {
 })
 
 window.addEventListener("resize", () => {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    let oldCanvas = {
+        height: canvas.height,
+        width: canvas.width
+    }
+    canvas.height = window.innerHeight * scale;
+    canvas.width = window.innerWidth * scale;
+    repositionBalls(oldCanvas, canvas)
 })
