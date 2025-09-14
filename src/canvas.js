@@ -25,11 +25,11 @@ function randomInt(min, max) {
 
 function drawBall(ball) {
     ctx.save();
-    
-    ctx.shadowColor = "lightblue";
+
+    ctx.shadowColor = "#a5a2e6";
     ctx.shadowBlur = 8;
     ctx.fillStyle = "white";
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "#807bff";
     ctx.globalAlpha = ball.opacity;
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
@@ -45,9 +45,9 @@ function newBall() {
         x: randomRange(0, canvas.width),
         y: randomRange(0, canvas.height),
         speed: randomRange(0.3, 0.5) * scale,
-        opacity: randomRange(0.1, 0.5),
+        opacity: randomRange(0.1, 0.4),
         direction: randomRange(0, Math.PI * 2),
-        size: 4,
+        size: 10 * scale,
         attracted: false,
         threshold: 200 * scale
     })
@@ -91,13 +91,13 @@ function animate() {
             ball.direction = getAngle(ball, mousePos);
             if(!ball.attracted) {
                 ball.attracted = true;
-                ball.opacity = randomRange(0.6, 8);
+                ball.opacity = randomRange(0.8, 1);
             }
         } else {
             if(ball.attracted) {
                 ball.attracted = false;
                 ball.direction = randomRange(0, Math.PI * 2);
-                ball.opacity = randomRange(0.1, 0.5);
+                ball.opacity = randomRange(0.1, 0.4);
             }
         }
 
