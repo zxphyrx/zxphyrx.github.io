@@ -41,16 +41,22 @@ function drawBall(ball) {
 }
 
 function newBall() {
-    balls.push({
+    let ball = {
         x: randomRange(0, canvas.width),
         y: randomRange(0, canvas.height),
         speed: randomRange(0.3, 0.5) * scale,
-        opacity: randomRange(0.1, 0.4),
+        opacity: 0,
+        maxOpacityOrig: randomRange(0.1, 0.2),
+        maxOpacity: null,
         direction: randomRange(0, Math.PI * 2),
         size: 10 * scale,
         attracted: false,
-        threshold: 200 * scale
-    })
+        threshold: 200 * scale,
+        dying: false
+    }
+    
+    ball.maxOpacity = ball.maxOpacityOrig;
+    balls.push(ball);
 }
 
 function repositionBalls(oldCanvas, canvas) {
@@ -91,14 +97,21 @@ function animate() {
             ball.direction = getAngle(ball, mousePos);
             if(!ball.attracted) {
                 ball.attracted = true;
-                ball.opacity = randomRange(0.8, 1);
+                ball.maxOpacity = randomRange(0.8, 1);
             }
         } else {
             if(ball.attracted) {
                 ball.attracted = false;
                 ball.direction = randomRange(0, Math.PI * 2);
-                ball.opacity = randomRange(0.1, 0.4);
+                ball.maxOpacity = ball.maxOpacityOrig;
             }
+        }
+
+        if(ball.opacity < ball.maxOpacity) {
+            ball.opacity = Math.min(ball.opacity + 0.1, ball.maxOpacity);
+        }
+        if(ball.opacity > ball.maxOpacity) {
+            ball.opacity = Math.max(ball.opacity - 0.075, ball.maxOpacity);
         }
 
         let newPos = moveBall(ball);
@@ -106,12 +119,12 @@ function animate() {
         ball.x = newPos.x;
         ball.y = newPos.y;
         
-        if(ball.x - ball.size > canvas.width || ball.x - ball.size < 0 || ball.y - ball.size > canvas.height || ball.y - ball.size < 0 || ball.opacity < 0) {
+        if((ball.x - ball.size > canvas.width || ball.x - ball.size < 0 || ball.y - ball.size > canvas.height || ball.y - ball.size < 0 || ball.opacity < 0) && ball.dying == false) {
             balls.splice(index, 1);
             newBall();
-        } else {
-            drawBall(ball);
         }
+
+        drawBall(ball);
     })
 
     requestAnimationFrame(animate);
