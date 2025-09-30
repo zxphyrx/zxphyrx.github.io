@@ -115,6 +115,7 @@ function loadAnimations() {
             pin: projectsLabelSection,
         }
     })
+
     gsap.timeline({
         scrollTrigger: {
             trigger: projectsCards,
